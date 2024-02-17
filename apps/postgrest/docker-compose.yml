@@ -1,0 +1,24 @@
+services:
+  postgrest:
+    image: postgrest/postgrest:v12.0.2
+    ports:
+      - "3333:3000"
+    environment:
+      PGRST_DB_URI: postgres://authenticator:mysecretpassword@db:5432/postgres
+      PGRST_DB_SCHEMAS: api
+      PGRST_DB_ANON_ROLE: web_anon
+      PGRST_JWT_SECRET: 359e4d86a34920e5e6aad795dead682d093798daece763a68826abcf2b23256e
+      PGRST_LOG_LEVEL: info
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=mysecretpassword

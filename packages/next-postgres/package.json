@@ -1,0 +1,22 @@
+{
+  "name": "next-postgrest",
+  "version": "0.1.0",
+  "description": "Use Next.js with PostgREST effortlessly",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "MIT",
+  "repository": "zeevo/next-postgrest",
+  "scripts": {
+    "clean": "rm -rf ./node_modules",
+    "build": "tsup src/index.ts",
+    "build:watch": "tsup --watch"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.56.1",
+    "@types/node": "^20.10.6",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3",
+    "next": "14.1.0"
+  }
+}
