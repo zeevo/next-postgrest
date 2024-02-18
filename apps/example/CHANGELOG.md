@@ -1,5 +1,13 @@
 # next-postgrest-example
 
+## 0.1.1
+
+### Patch Changes
+
+- limit package to specific files
+- Updated dependencies
+  - next-postgrest@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
