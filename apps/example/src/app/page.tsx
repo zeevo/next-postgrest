@@ -1,6 +1,7 @@
 import { Swagger } from "./_components/swagger";
 
 export default async function Page() {
+  // Fetch spec from PostgREST endpoint
   const spec = await fetch("http://localhost:3333");
 
   const json = await spec.json();
