@@ -26,7 +26,7 @@ importers:
         version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
       next-postgrest:
         specifier: workspace:*
-        version: link:../../packages/next-postgres
+        version: link:../../packages/next-postgrest
       react:
         specifier: ^18
         version: 18.2.0
@@ -61,7 +61,7 @@ importers:
 
   apps/postgrest: {}
 
-  packages/next-postgres:
+  packages/next-postgrest:
     devDependencies:
       '@types/eslint':
         specifier: ^8.56.1
@@ -3402,6 +3402,7 @@ packages:
   /lilconfig@3.1.0:
     resolution: {integrity: sha512-p3cz0JV5vw/XeouBU3Ldnp+ZkBjE+n8ydJ4mcwBrOiXXPqNlrzGBqWs9X4MWF7f+iKUBu794Y8Hh8yawiJbCjw==}
     engines: {node: '>=14'}
+    deprecated: This version contains a security issue. Please upgrade to 3.1.1 or later.
     dev: true
 
   /lines-and-columns@1.2.4:
