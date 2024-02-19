@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "clean": "rm -rf ./node_modules",
+    "clean": "rm -rf ./dist",
+    "lint": "eslint",
     "build": "tsup src/index.ts",
     "build:watch": "tsup --watch"
   },

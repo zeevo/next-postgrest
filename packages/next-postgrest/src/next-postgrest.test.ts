@@ -37,7 +37,7 @@ describe("next-postgres.ts tests", () => {
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
-    test("without prefix without trailing slashes", () => {
+    test("without basePath without trailing slashes", () => {
       const proxyURL = getProxyURL(
         "http://localhost/foo",
         "http://postgrest",
@@ -47,7 +47,7 @@ describe("next-postgres.ts tests", () => {
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
-    test("without prefix with trailing slashes", () => {
+    test("without basePath with trailing slashes", () => {
       const proxyURL = getProxyURL(
         "http://localhost/foo/",
         "http://postgrest/",
@@ -57,7 +57,7 @@ describe("next-postgres.ts tests", () => {
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
-    test("deep prefix", () => {
+    test("deep basePath", () => {
       const proxyURL = getProxyURL(
         "http://localhost/api/rest/foo",
         "http://postgrest",
@@ -67,7 +67,7 @@ describe("next-postgres.ts tests", () => {
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
-    test("deep prefix with trailing slashes", () => {
+    test("deep basePath with trailing slashes", () => {
       const proxyURL = getProxyURL(
         "http://localhost/api/rest/foo/",
         "http://postgrest/",
@@ -77,7 +77,7 @@ describe("next-postgres.ts tests", () => {
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
-    test("prefix without leading slash", () => {
+    test("basePath without leading slash", () => {
       const proxyURL = getProxyURL(
         "http://localhost/api/rest/foo/",
         "http://postgrest/",

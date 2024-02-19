@@ -19,7 +19,7 @@ import { NextPostgrest } from "next-postgrest";
 
 export const { GET, POST, PUT, DELETE, PATCH } = NextPostgrest({
   url: "http://postgrest:3333",
-  prefix: "/api",
+  basePath: "/api",
 });
 ```
 
