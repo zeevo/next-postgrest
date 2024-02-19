@@ -1,5 +1,13 @@
 # next-postgrest-example
 
+## 0.1.2
+
+### Patch Changes
+
+- 9112f5f: fixed bug when `prefix` is omitted
+- Updated dependencies [9112f5f]
+  - next-postgrest@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "postgrest",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Start PostgREST and Postgres using Docker",
   "scripts": {},
   "author": "",
