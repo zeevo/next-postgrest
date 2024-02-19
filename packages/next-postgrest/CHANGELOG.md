@@ -1,5 +1,12 @@
 # next-postgrest
 
+## 0.1.3
+
+### Patch Changes
+
+- 46ec1ba: refactored core api
+- 7147506: added NextPostgrestSwagger
+
 ## 0.1.2
 
 ### Patch Changes
