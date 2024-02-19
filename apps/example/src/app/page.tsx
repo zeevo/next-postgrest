@@ -1,19 +1,13 @@
+import { NextPostgrestSwagger } from "next-postgrest";
 import { Swagger } from "./_components/swagger";
 
 export default async function Page() {
   // Fetch spec from PostgREST endpoint
-  const spec = await fetch("http://localhost:3333");
+  const spec = await NextPostgrestSwagger({
+    url: "http://localhost:3333",
+    host: "localhost:3000",
+    path: "/api",
+  });
 
-  const json = await spec.json();
-
-  return (
-    <Swagger
-      spec={{
-        ...json,
-        host: "localhost:3000",
-        basePath: "/api",
-        paths: { ...json.paths, "/": undefined },
-      }}
-    />
-  );
+  return <Swagger spec={spec} />;
 }

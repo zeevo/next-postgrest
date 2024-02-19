@@ -1,53 +1,90 @@
-import { getProxyURL } from "./next-postgrest";
+import { NextPostgrest, getProxyURL } from "./next-postgrest";
 
-describe("#getProxyURL tests", () => {
-  test("without trailing slash", () => {
-    const proxyURL = getProxyURL(
-      "http://localhost/api/foo",
-      "http://postgrest",
-      "/api"
-    );
+describe("next-postgres.ts tests", () => {
+  describe("#NextPostgrest", () => {
+    test("should return handlers", async () => {
+      const handlers = NextPostgrest({
+        url: "http://postgrest",
+        basePath: "/api",
+      });
 
-    expect(proxyURL).toEqual("http://postgrest/foo");
+      expect(typeof handlers.GET).toEqual("function");
+      expect(typeof handlers.POST).toEqual("function");
+      expect(typeof handlers.PATCH).toEqual("function");
+      expect(typeof handlers.DELETE).toEqual("function");
+      expect(typeof handlers.PUT).toEqual("function");
+    });
   });
 
-  test("without prefix without trailing slashes", () => {
-    const proxyURL = getProxyURL(
-      "http://localhost/foo",
-      "http://postgrest",
-      "/"
-    );
+  describe("#getProxyURL tests", () => {
+    test("trailing slash", () => {
+      const proxyURL = getProxyURL(
+        "http://localhost/api/foo",
+        "http://postgrest",
+        "/api"
+      );
 
-    expect(proxyURL).toEqual("http://postgrest/foo");
-  });
+      expect(proxyURL).toEqual("http://postgrest/foo");
+    });
 
-  test("without prefix with trailing slashes", () => {
-    const proxyURL = getProxyURL(
-      "http://localhost/foo/",
-      "http://postgrest/",
-      "/"
-    );
+    test("without trailing slash", () => {
+      const proxyURL = getProxyURL(
+        "http://localhost/api/foo",
+        "http://postgrest",
+        "/api"
+      );
 
-    expect(proxyURL).toEqual("http://postgrest/foo");
-  });
+      expect(proxyURL).toEqual("http://postgrest/foo");
+    });
 
-  test("deep prefix", () => {
-    const proxyURL = getProxyURL(
-      "http://localhost/api/rest/foo",
-      "http://postgrest",
-      "/api/rest"
-    );
+    test("without prefix without trailing slashes", () => {
+      const proxyURL = getProxyURL(
+        "http://localhost/foo",
+        "http://postgrest",
+        "/"
+      );
 
-    expect(proxyURL).toEqual("http://postgrest/foo");
-  });
+      expect(proxyURL).toEqual("http://postgrest/foo");
+    });
 
-  test("deep prefix with trailing slashes", () => {
-    const proxyURL = getProxyURL(
-      "http://localhost/api/rest/foo/",
-      "http://postgrest/",
-      "/api/rest/"
-    );
+    test("without prefix with trailing slashes", () => {
+      const proxyURL = getProxyURL(
+        "http://localhost/foo/",
+        "http://postgrest/",
+        "/"
+      );
 
-    expect(proxyURL).toEqual("http://postgrest/foo");
+      expect(proxyURL).toEqual("http://postgrest/foo");
+    });
+
+    test("deep prefix", () => {
+      const proxyURL = getProxyURL(
+        "http://localhost/api/rest/foo",
+        "http://postgrest",
+        "/api/rest"
+      );
+
+      expect(proxyURL).toEqual("http://postgrest/foo");
+    });
+
+    test("deep prefix with trailing slashes", () => {
+      const proxyURL = getProxyURL(
+        "http://localhost/api/rest/foo/",
+        "http://postgrest/",
+        "/api/rest/"
+      );
+
+      expect(proxyURL).toEqual("http://postgrest/foo");
+    });
+
+    test("prefix without leading slash", () => {
+      const proxyURL = getProxyURL(
+        "http://localhost/api/rest/foo/",
+        "http://postgrest/",
+        "api/rest/"
+      );
+
+      expect(proxyURL).toEqual("http://postgrest/foo");
+    });
   });
 });

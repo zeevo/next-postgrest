@@ -1,30 +1,32 @@
-export function getProxyURL(url: string, pgUrl: string, prefix: string) {
-  if (!url.endsWith("/")) {
+export function getProxyURL(reqUrl: string, pgUrl: string, basePath: string) {
+  if (!reqUrl.endsWith("/")) {
     pgUrl += "/";
   }
 
-  if (!prefix.startsWith("/")) {
-    prefix += "/";
+  if (!basePath.startsWith("/")) {
+    basePath = `/${basePath}`;
   }
 
-  const { pathname, search } = new URL(url);
+  const { pathname, search } = new URL(reqUrl);
 
   const pgRestPath = pathname + search;
 
-  let prefixAwarePgRestPath = pgRestPath.replace(prefix, "").replace(/\/$/, "");
+  const prefixAwarePgRestPath = pgRestPath
+    .replace(basePath, "")
+    .replace(/\/$/, "");
 
   return new URL(prefixAwarePgRestPath, pgUrl).toString();
 }
 
 export function NextPostgrest({
   url,
-  prefix = "/",
+  basePath = "/",
 }: {
   url: string;
-  prefix?: string;
+  basePath?: string;
 }) {
   async function handler(request: Request) {
-    const proxyURL = getProxyURL(request.url, url, prefix);
+    const proxyURL = getProxyURL(request.url, url, basePath);
 
     const body = await request.text();
 
