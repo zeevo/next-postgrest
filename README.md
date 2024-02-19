@@ -52,28 +52,20 @@ export function Swagger({ spec }: { spec: Record<string, any> }) {
 }
 ```
 
-2. Use it in a React Server Component
+2. Use `NextPostgrestSwagger` in a React Server Component
 
 ```js
-// app/api-docs/page.tsx
+import { NextPostgrestSwagger } from "next-postgrest";
 import { Swagger } from "./_components/swagger";
 
 export default async function Page() {
-  // Fetch spec from PostgREST endpoint
-  const spec = await fetch("http://postgrest:3333");
+  const spec = await NextPostgrestSwagger({
+    url: "http://localhost:3333", // your PostgREST endpoint
+    host: "localhost:3000", // your site
+    basePath: "/api", // path to your NextPostgrest route handler
+  });
 
-  const json = await spec.json();
-
-  return (
-    <Swagger
-      spec={{
-        ...json,
-        host: "localhost:3000",
-        basePath: "/api",
-        paths: { ...json.paths, "/": undefined },
-      }}
-    />
-  );
+  return <Swagger spec={spec} />;
 }
 ```
 
