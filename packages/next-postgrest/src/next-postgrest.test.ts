@@ -6,6 +6,7 @@ describe("next-postgres.ts tests", () => {
       const handlers = NextPostgrest({
         url: "http://postgrest",
         basePath: "/api",
+        authorize: ({ pathname, searchParams }) => {},
       });
 
       expect(typeof handlers.GET).toEqual("function");
@@ -18,73 +19,113 @@ describe("next-postgres.ts tests", () => {
 
   describe("#getProxyURL tests", () => {
     test("trailing slash", () => {
-      const proxyURL = getProxyURL(
-        "http://localhost/api/foo",
-        "http://postgrest",
-        "/api"
-      );
+      const proxyURL = getProxyURL({
+        pathname: "/api/foo/",
+        search: "",
+        url: "http://postgrest",
+        basePath: "/api",
+      });
 
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
     test("without trailing slash", () => {
-      const proxyURL = getProxyURL(
-        "http://localhost/api/foo",
-        "http://postgrest",
-        "/api"
-      );
+      const proxyURL = getProxyURL({
+        pathname: "/api/foo",
+        search: "",
+        url: "http://postgrest",
+        basePath: "/api",
+      });
 
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
     test("without basePath without trailing slashes", () => {
-      const proxyURL = getProxyURL(
-        "http://localhost/foo",
-        "http://postgrest",
-        "/"
-      );
+      const proxyURL = getProxyURL({
+        pathname: "foo",
+        search: "",
+        url: "http://postgrest",
+        basePath: "/",
+      });
 
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
     test("without basePath with trailing slashes", () => {
-      const proxyURL = getProxyURL(
-        "http://localhost/foo/",
-        "http://postgrest/",
-        "/"
-      );
+      const proxyURL = getProxyURL({
+        pathname: "foo",
+        search: "",
+        url: "http://postgrest/",
+        basePath: "/",
+      });
 
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
     test("deep basePath", () => {
-      const proxyURL = getProxyURL(
-        "http://localhost/api/rest/foo",
-        "http://postgrest",
-        "/api/rest"
-      );
+      const proxyURL = getProxyURL({
+        pathname: "/api/rest/foo",
+        search: "",
+        url: "http://postgrest",
+        basePath: "/api/rest",
+      });
 
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
     test("deep basePath with trailing slashes", () => {
-      const proxyURL = getProxyURL(
-        "http://localhost/api/rest/foo/",
-        "http://postgrest/",
-        "/api/rest/"
-      );
+      const proxyURL = getProxyURL({
+        pathname: "/api/rest/foo",
+        search: "",
+        url: "http://postgrest",
+        basePath: "/api/rest/",
+      });
 
       expect(proxyURL).toEqual("http://postgrest/foo");
     });
 
     test("basePath without leading slash", () => {
-      const proxyURL = getProxyURL(
-        "http://localhost/api/rest/foo/",
-        "http://postgrest/",
-        "api/rest/"
-      );
+      const proxyURL = getProxyURL({
+        pathname: "/api/rest/foo/",
+        search: "",
+        url: "http://postgrest",
+        basePath: "api/rest/",
+      });
 
       expect(proxyURL).toEqual("http://postgrest/foo");
+    });
+
+    test("basePath without leading slash or trailing slash", () => {
+      const proxyURL = getProxyURL({
+        pathname: "/api/rest/foo/",
+        search: "?q=b",
+        url: "http://postgrest",
+        basePath: "api/rest",
+      });
+
+      expect(proxyURL).toEqual("http://postgrest/foo?q=b");
+    });
+
+    test("with basic search", () => {
+      const proxyURL = getProxyURL({
+        pathname: "/api/rest/foo/",
+        search: "?bar=eq.baz",
+        url: "http://postgrest/",
+        basePath: "api/rest/",
+      });
+
+      expect(proxyURL).toEqual("http://postgrest/foo?bar=eq.baz");
+    });
+
+    test("with basic search no basePath", () => {
+      const proxyURL = getProxyURL({
+        pathname: "/foo/",
+        search: "?bar=eq.baz",
+        url: "http://postgrest/",
+        basePath: "/",
+      });
+
+      expect(proxyURL).toEqual("http://postgrest/foo?bar=eq.baz");
     });
   });
 });

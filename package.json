@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "test": "turbo test",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
