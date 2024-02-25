@@ -1,5 +1,3 @@
-export type NextPostgrestFalsy = false | undefined | null | void;
-
 export function getProxyURL({
   pathname,
   search,
@@ -22,25 +20,25 @@ export function getProxyURL({
 export function NextPostgrest({
   url,
   basePath = "/",
-  authorize = () => false,
+  before = () => {},
 }: {
   url: string;
   basePath?: string;
-  authorize({
+  before({
     pathname,
     searchParams,
   }: {
     pathname: string;
     searchParams: string;
-  }): Response | NextPostgrestFalsy;
+  }): Response | Promise<Response> | false | undefined | null | void;
 }) {
   async function handler(request: Request) {
     const { pathname, search } = new URL(request.url);
 
-    const authResponse = authorize({ pathname, searchParams: search });
+    const beforeResponse = await before({ pathname, searchParams: search });
 
-    if (authResponse) {
-      return authResponse;
+    if (beforeResponse) {
+      return beforeResponse;
     }
 
     const proxyURL = getProxyURL({ pathname, search, url, basePath });
