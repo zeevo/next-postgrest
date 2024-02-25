@@ -1,5 +1,13 @@
 # next-postgrest-example
 
+## 0.1.5
+
+### Patch Changes
+
+- Refactor args to `before` hook
+- Updated dependencies
+  - next-postgrest@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

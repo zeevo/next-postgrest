@@ -1,5 +1,11 @@
 # postgrest
 
+## 0.1.5
+
+### Patch Changes
+
+- Refactor args to `before` hook
+
 ## 0.1.4
 
 ### Patch Changes
