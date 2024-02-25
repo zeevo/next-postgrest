@@ -1,4 +1,4 @@
-import { NextPostgrest, getProxyURL } from "./next-postgrest";
+import { NextPostgrest, getProxyURL, paramsToObject } from "./next-postgrest";
 
 describe("next-postgres.ts tests", () => {
   describe("#NextPostgrest", () => {
@@ -6,7 +6,7 @@ describe("next-postgres.ts tests", () => {
       const handlers = NextPostgrest({
         url: "http://postgrest",
         basePath: "/api",
-        authorize: ({ pathname, searchParams }) => {},
+        before: ({ pathname, searchParams, view }) => {},
       });
 
       expect(typeof handlers.GET).toEqual("function");
@@ -126,6 +126,14 @@ describe("next-postgres.ts tests", () => {
       });
 
       expect(proxyURL).toEqual("http://postgrest/foo?bar=eq.baz");
+    });
+  });
+
+  describe("#paramsToObject tests", () => {
+    test("should return object", () => {
+      expect(paramsToObject(new URLSearchParams("?id=eq.1"))).toEqual({
+        id: "eq.1",
+      });
     });
   });
 });

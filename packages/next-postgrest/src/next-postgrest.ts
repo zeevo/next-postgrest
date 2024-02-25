@@ -1,3 +1,19 @@
+export function paramsToObject(urlSearchParams: URLSearchParams) {
+  const result: Record<string, string> = {};
+  for (const [key, value] of urlSearchParams.entries()) {
+    result[key] = value;
+  }
+  return result;
+}
+
+export function getBaseAwarePath(basePath: string, pathname: string) {
+  if (!basePath.startsWith("/")) {
+    basePath = `/${basePath}`;
+  }
+
+  return pathname.replace(basePath, "").replace(/\/$/, "").replace(/^\//, "");
+}
+
 export function getProxyURL({
   pathname,
   search,
@@ -9,11 +25,7 @@ export function getProxyURL({
   url: string;
   basePath: string;
 }) {
-  if (!basePath.startsWith("/")) {
-    basePath = `/${basePath}`;
-  }
-
-  let prefixAwarePgRestPath = pathname.replace(basePath, "").replace(/\/$/, "");
+  const prefixAwarePgRestPath = getBaseAwarePath(basePath, pathname);
   return new URL(prefixAwarePgRestPath + search, url).toString();
 }
 
@@ -26,16 +38,24 @@ export function NextPostgrest({
   basePath?: string;
   before({
     pathname,
+    view,
     searchParams,
   }: {
     pathname: string;
-    searchParams: string;
+    view: string;
+    searchParams: Record<string, string>;
   }): Response | Promise<Response> | false | undefined | null | void;
 }) {
   async function handler(request: Request) {
     const { pathname, search } = new URL(request.url);
 
-    const beforeResponse = await before({ pathname, searchParams: search });
+    let baseAwarePath = getBaseAwarePath(basePath, pathname);
+
+    const beforeResponse = await before({
+      pathname: pathname,
+      view: baseAwarePath,
+      searchParams: paramsToObject(new URLSearchParams(search)),
+    });
 
     if (beforeResponse) {
       return beforeResponse;
