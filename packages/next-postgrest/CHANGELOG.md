@@ -1,5 +1,11 @@
 # next-postgrest
 
+## 0.1.6
+
+### Patch Changes
+
+- update the `before` hook
+
 ## 0.1.5
 
 ### Patch Changes
