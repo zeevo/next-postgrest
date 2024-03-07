@@ -20,6 +20,14 @@ import { NextPostgrest } from "next-postgrest";
 export const { GET, POST, PUT, DELETE, PATCH } = NextPostgrest({
   url: "http://postgrest:3333",
   basePath: "/api",
+  before({ pathname, searchParams, view, request }) {
+    // Validate something
+    if (Object.keys(searchParams).includes("myField")) {
+      return new Response(JSON.stringify({ message: "bad request" }), {
+        status: 400,
+      });
+    }
+  },
 });
 ```
 
@@ -70,3 +78,26 @@ export default async function Page() {
 ```
 
 3. Visit your API Docs at http://localhost:3000/api-docs
+
+## Short circuiting with `before`
+
+You can use `before` to inspect the incoming request and return a new `Response`.
+
+```js
+// app/api/[[...rest]]/route.ts
+
+import { NextPostgrest } from "next-postgrest";
+
+export const { GET, POST, PUT, DELETE, PATCH } = NextPostgrest({
+  url: "http://postgrest:3333",
+  basePath: "/api",
+  before({ pathname, searchParams, view, request }) {
+    // Validate something
+    if (Object.keys(searchParams).includes("myField")) {
+      return new Response(JSON.stringify({ message: "bad request" }), {
+        status: 400,
+      });
+    }
+  },
+});
+```

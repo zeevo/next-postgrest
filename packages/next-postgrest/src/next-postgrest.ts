@@ -32,33 +32,38 @@ export function getProxyURL({
 export function NextPostgrest({
   url,
   basePath = "/",
-  before = () => {},
+  before,
 }: {
   url: string;
   basePath?: string;
-  before({
+  before?({
     pathname,
     view,
     searchParams,
+    request,
   }: {
     pathname: string;
     view: string;
     searchParams: Record<string, string>;
+    request: Request;
   }): Response | Promise<Response> | false | undefined | null | void;
 }) {
-  async function handler(request: Request) {
+  async function handler(request: Request): Promise<Response> {
     const { pathname, search } = new URL(request.url);
 
     let baseAwarePath = getBaseAwarePath(basePath, pathname);
 
-    const beforeResponse = await before({
-      pathname: pathname,
-      view: baseAwarePath,
-      searchParams: paramsToObject(new URLSearchParams(search)),
-    });
+    if (before) {
+      const beforeResponse = await before({
+        pathname: pathname,
+        view: baseAwarePath,
+        searchParams: paramsToObject(new URLSearchParams(search)),
+        request,
+      });
 
-    if (beforeResponse) {
-      return beforeResponse;
+      if (beforeResponse) {
+        return beforeResponse;
+      }
     }
 
     const proxyURL = getProxyURL({ pathname, search, url, basePath });

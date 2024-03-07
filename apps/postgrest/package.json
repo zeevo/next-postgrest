@@ -3,7 +3,9 @@
   "private": true,
   "version": "0.1.5",
   "description": "Start PostgREST and Postgres using Docker",
-  "scripts": {},
+  "scripts": {
+    "start": "docker compose up"
+  },
   "author": "",
   "license": "MIT"
 }
