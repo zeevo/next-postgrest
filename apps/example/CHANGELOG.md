@@ -1,5 +1,13 @@
 # next-postgrest-example
 
+## 0.1.8
+
+### Patch Changes
+
+- update README
+- Updated dependencies
+  - next-postgrest@0.1.8
+
 ## 0.1.7
 
 ### Patch Changes
