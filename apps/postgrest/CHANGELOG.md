@@ -1,5 +1,11 @@
 # postgrest
 
+## 0.1.7
+
+### Patch Changes
+
+- update README
+
 ## 0.1.6
 
 ### Patch Changes
