@@ -5,7 +5,10 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "license": "MIT",
-  "repository": "zeevo/next-postgrest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zeevo/next-postgrest.git"
+  },
   "files": [
     "./dist/index.js",
     "./dist/index.d.ts"
