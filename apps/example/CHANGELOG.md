@@ -1,5 +1,13 @@
 # next-postgrest-example
 
+## 0.1.9
+
+### Patch Changes
+
+- add CI (experimental)
+- Updated dependencies
+  - next-postgrest@0.1.9
+
 ## 0.1.8
 
 ### Patch Changes

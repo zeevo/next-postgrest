@@ -1,5 +1,11 @@
 # postgrest
 
+## 0.1.9
+
+### Patch Changes
+
+- add CI (experimental)
+
 ## 0.1.8
 
 ### Patch Changes
