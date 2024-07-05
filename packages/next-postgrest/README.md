@@ -31,7 +31,7 @@ export const { GET, POST, PUT, DELETE, PATCH } = NextPostgrest({
 });
 ```
 
-## Query your Next.JS API
+## Query your Next.js API
 
 ```bash
 curl http://localhost:3000/api/todos
