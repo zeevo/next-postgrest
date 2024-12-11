@@ -43,7 +43,7 @@ You can use `swagger-ui-react` to create API Docs automatically.
 
 1. Create a Swagger Client Component
 
-```js
+```ts
 "use client";
 
 import dynamic from "next/dynamic";
@@ -62,7 +62,7 @@ export function Swagger({ spec }: { spec: Record<string, any> }) {
 
 2. Use `NextPostgrestSwagger` in a React Server Component
 
-```js
+```ts
 import { NextPostgrestSwagger } from "next-postgrest";
 import { Swagger } from "./_components/swagger";
 
@@ -83,7 +83,7 @@ export default async function Page() {
 
 You can use `before` to inspect the incoming request and return a new `Response`.
 
-```js
+```ts
 // app/api/[[...rest]]/route.ts
 
 import { NextPostgrest } from "next-postgrest";
